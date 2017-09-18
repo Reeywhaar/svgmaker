@@ -1,21 +1,23 @@
 {
   "name": "@reeywhaar/svgmaker",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Library for generating svg xml",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-	"keywords": ["svg"],
-	"author": "Mikhail Vyrtsev",
-	"homepage": "https://github.com/Reeywhaar/svgmaker",
-	"bugs": {
-		"url" : "https://github.com/Reeywhaar/svgmaker/issues",
-		"email" : "reeywhaar@gmail.com"
-	},
-	"repository": {
-		"type" : "git",
-		"url" : "https://github.com/Reeywhaar/svgmaker"
+  "keywords": [
+    "svg"
+  ],
+  "author": "Mikhail Vyrtsev",
+  "homepage": "https://github.com/Reeywhaar/svgmaker",
+  "bugs": {
+    "url": "https://github.com/Reeywhaar/svgmaker/issues",
+    "email": "reeywhaar@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Reeywhaar/svgmaker"
   },
   "license": "BSD-3-Clause",
   "dependencies": {}
