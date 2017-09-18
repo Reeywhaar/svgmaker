@@ -12,6 +12,10 @@ function pipe(obj, ...fns){
 	}, obj)
 };
 
+function format(str, ...replacements){
+	return str.replace(/\{\}/g, x => replacements.shift());
+}
+
 function cl(x){
 	console.log(x);
 	return x;
@@ -45,9 +49,48 @@ class Element extends BaseElement{
 
 exports.Element = Element;
 
-exports.e = function(tag, attrs, children = []){
-	return new Element(tag, attrs, children);
+exports.e = (tag, attrs, children = []) => new Element(tag, attrs, children);
+
+class RoundedRectangle{
+	constructor(x, y, width, height, topleftd, toprightd, bottomrightd, bottomleftd, attrs = {}, children=[]){
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.topleftd = topleftd;
+		this.toprightd = toprightd;
+		this.bottomrightd = bottomrightd;
+		this.bottomleftd = bottomleftd;
+		this.attrs = attrs;
+		this.children = children;
+	}
+
+	toString(){
+		return (new Element(
+			"path",
+			{
+				d: format(
+					"\n\tm{} {} h{} q{} {}, {} {}\n\tv{} q{} {}, {} {}\n\th{} q{} {}, {} {}\n\tv{} q{} {}, {} {} z\n",
+					/* m */this.x+this.topleftd, this.y,
+					/* h */this.width - this.topleftd - this.toprightd,
+					/* q */this.toprightd, 0, this.toprightd, this.toprightd,
+					/* v */this.height - this.toprightd - this.bottomrightd,
+					/* q */0, this.bottomrightd, -this.bottomrightd, this.bottomrightd,
+					/* h */-(this.width - this.bottomleftd - this.bottomrightd),
+					/* q */-this.bottomleftd, 0, -this.bottomleftd, -this.bottomleftd,
+					/* v */-(this.height - this.topleftd - this.bottomleftd),
+					/* q */0, -this.topleftd, this.topleftd, -this.topleftd,
+				),
+				...this.attrs,
+			},
+			this.children,
+		)).toString();
+	}
 }
+
+exports.RoundedRectangle = RoundedRectangle;
+
+exports.rrect = (x, y, width, hight, topleftd, toprightd, bottomrightd, bottomleftd, attrs = {}, children=[]) => new RoundedRectangle(x, y, width, hight, topleftd, toprightd, bottomrightd, bottomleftd, attrs, children);
 
 class SelfClosingElement extends BaseElement{
 	constructor(tag, attrs){
@@ -61,9 +104,7 @@ class SelfClosingElement extends BaseElement{
 
 exports.SelfClosingElement = SelfClosingElement;
 
-exports.sce = function(tag, attrs){
-	return new Element(tag, attrs);
-}
+exports.sce = (tag, attrs) => new Element(tag, attrs);
 
 class SVG{
 	constructor(width, height, attrs = {}, children = []){
@@ -91,9 +132,7 @@ class SVG{
 
 exports.SVG = SVG;
 
-exports.svg = function(width, height, attrs = {}, children = []){
-	return new SVG(width, height, attrs, children);
-};
+exports.svg = (width, height, attrs = {}, children = []) => new SVG(width, height, attrs, children);
 
 class SVGFile{
 	constructor(width, height, attrs = {}, children = []){
@@ -110,6 +149,4 @@ class SVGFile{
 
 exports.SVGFile = SVGFile;
 
-exports.svgFile = function(width, height, attrs = {}, children = []){
-	return new SVGFile(width, height, attrs, children);
-};
+exports.svgFile = (width, height, attrs = {}, children = []) => new SVGFile(width, height, attrs, children);
