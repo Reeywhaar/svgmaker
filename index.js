@@ -21,6 +21,10 @@ function cl(x){
 	return x;
 }
 
+function attrsToXML(attrs){
+	return Object.entries(attrs).map(([key, value]) => `${key}="${value}"`).join(" ");
+}
+
 class BaseElement{
 	constructor(tag, attrs){
 		this.tag = tag;
@@ -43,13 +47,26 @@ class Element extends BaseElement{
 				x => wrap("\n", x),
 			);
 		};
-		return `<${this.tag} ${Object.entries(this.attrs).map(([key, value]) => `${key}="${value}"`).join(" ")}>${children}</${this.tag}>`
+		return `<${this.tag} ${attrsToXML(this.attrs)}>${children}</${this.tag}>`
 	}
 }
 
 exports.Element = Element;
-
 exports.e = (tag, attrs, children = []) => new Element(tag, attrs, children);
+
+class TextElement extends BaseElement{
+	constructor(tag, attrs, content = null){
+		super(tag, attrs);
+		this.content = content;
+	}
+
+	toString(){
+		return `<${this.tag} ${attrsToXML(this.attrs)}>${this.content}</${this.tag}>`
+	}
+}
+
+exports.TextElement = TextElement;
+exports.texte = (tag, attrs, content = null) => new TextElement(tag, attrs, content);
 
 class RoundedRectangle{
 	constructor(x, y, width, height, topleftd, toprightd, bottomrightd, bottomleftd, attrs = {}, children=[]){
@@ -89,7 +106,6 @@ class RoundedRectangle{
 }
 
 exports.RoundedRectangle = RoundedRectangle;
-
 exports.rrect = (x, y, width, hight, topleftd, toprightd, bottomrightd, bottomleftd, attrs = {}, children=[]) => new RoundedRectangle(x, y, width, hight, topleftd, toprightd, bottomrightd, bottomleftd, attrs, children);
 
 class SelfClosingElement extends BaseElement{
@@ -103,7 +119,6 @@ class SelfClosingElement extends BaseElement{
 }
 
 exports.SelfClosingElement = SelfClosingElement;
-
 exports.sce = (tag, attrs) => new SelfClosingElement(tag, attrs);
 
 class SVG{
@@ -131,7 +146,6 @@ class SVG{
 }
 
 exports.SVG = SVG;
-
 exports.svg = (width, height, attrs = {}, children = []) => new SVG(width, height, attrs, children);
 
 class SVGFile{
@@ -148,5 +162,4 @@ class SVGFile{
 }
 
 exports.SVGFile = SVGFile;
-
 exports.svgFile = (width, height, attrs = {}, children = []) => new SVGFile(width, height, attrs, children);
