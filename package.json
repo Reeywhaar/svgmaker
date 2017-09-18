@@ -1,6 +1,6 @@
 {
   "name": "@reeywhaar/svgmaker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Library for generating svg xml",
   "main": "index.js",
   "scripts": {
