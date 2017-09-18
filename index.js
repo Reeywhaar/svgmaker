@@ -104,7 +104,7 @@ class SelfClosingElement extends BaseElement{
 
 exports.SelfClosingElement = SelfClosingElement;
 
-exports.sce = (tag, attrs) => new Element(tag, attrs);
+exports.sce = (tag, attrs) => new SelfClosingElement(tag, attrs);
 
 class SVG{
 	constructor(width, height, attrs = {}, children = []){
