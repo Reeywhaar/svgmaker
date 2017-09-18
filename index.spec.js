@@ -15,5 +15,7 @@ describe(`SVGMaker`, function(){
 	it(`TextElement`, function(){
 		const el = s.texte("style", {fill: "black"}, "body{padding:0;}");
 		assert.strictEqual(el.toString(), `<style fill="black">body{padding:0;}</style>`);
+		const elb = s.texte("style", {fill: "black"});
+		assert.strictEqual(elb.toString(), `<style fill="black"></style>`);
 	});
 });

@@ -61,6 +61,7 @@ class TextElement extends BaseElement{
 	}
 
 	toString(){
+		if(!this.content) this.content = "";
 		return `<${this.tag} ${attrsToXML(this.attrs)}>${this.content}</${this.tag}>`
 	}
 }
