@@ -6,7 +6,7 @@
 // 	}
 // },
 
-const svgmaker = require(".index.js");
+const svgmaker = require("./index.js");
 
 module.exports = function SVGLoader(source) {
 	if(this.cacheable) this.cacheable();
