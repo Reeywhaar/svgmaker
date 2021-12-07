@@ -20,5 +20,7 @@
     "url": "https://github.com/Reeywhaar/svgmaker"
   },
   "license": "BSD-3-Clause",
-  "dependencies": {}
+  "devDependencies": {
+    "webpack": "^5.65.0"
+  }
 }
